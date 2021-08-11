@@ -7,6 +7,6 @@ export const connectDb: TypeOrmModuleOptions = {
   username: 'root',
   password: '',
   database: 'cv_tech',
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: true,
 };

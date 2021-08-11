@@ -1,14 +1,15 @@
 import {
-  Column,
   Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
-import { ExperiencesEntity } from './experiences.entity';
-import { CompetencesEntity } from './competences.entity';
-import { FormationsEntity } from './formations.entity';
+
+import { ExperiencesEntity } from './../../experiences/entities/experience.entity';
+import { CompetencesEntity } from './../../competences/entities/competence.entity';
+import { FormationsEntity } from './../../formations/entities/formation.entity';
 
 @Entity()
 export class CvEntity {

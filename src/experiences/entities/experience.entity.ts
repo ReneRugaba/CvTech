@@ -1,11 +1,11 @@
 import {
-  Column,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-import { CvEntity } from './cv.entity';
+import { CvEntity } from './../../cv/entities/cv.entity';
 
 @Entity()
 export class ExperiencesEntity {

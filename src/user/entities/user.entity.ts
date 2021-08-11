@@ -1,13 +1,13 @@
+import { PhotosEntity } from './../../photos/entities/photo.entity';
 import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
   OneToMany,
+  Column,
   PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Entity,
 } from 'typeorm';
-import { PhotosEntity } from './photos.entity';
-import { AdresseEntity } from './adresse.entity';
+import { AdresseEntity } from './../../adresse/entities/adresse.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -23,8 +23,7 @@ export class UserEntity {
   password: string;
 
   @OneToMany(() => PhotosEntity, (photo) => photo.user, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
+    cascade: true,
   })
   photos: PhotosEntity;
 

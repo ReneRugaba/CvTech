@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CvEntity } from './cv.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { CvEntity } from './../../cv/entities/cv.entity';
 
 @Entity()
 export class CompetencesEntity {
