@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { PhotosModule } from './photos/photos.module';
 import { AdresseModule } from './adresse/adresse.module';
@@ -24,7 +22,7 @@ import { connectDb } from './config/connectDb';
     ExperiencesModule,
     FormationsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

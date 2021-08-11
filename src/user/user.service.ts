@@ -1,4 +1,5 @@
 import {
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -32,12 +33,13 @@ export class UserService {
     return newUser;
   }
 
-  findAll() {
-    try {
-      return this.userRepository.find();
-    } catch (error) {
-      throw InternalServerErrorException;
+  async findAll() {
+    const users = await this.userRepository.find();
+    if (!users) {
+      throw ForbiddenException;
     }
+    users.map((user) => (user.password = undefined));
+    return users;
   }
 
   findOne(id: number) {
@@ -45,7 +47,7 @@ export class UserService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.userRepository.update(id, updateUserDto);
   }
 
   remove(id: number) {
