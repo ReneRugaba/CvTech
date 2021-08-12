@@ -6,7 +6,6 @@ export class CreateAdresseDto {
   numRue: number;
 
   @IsString()
-  @Min(3)
   @IsNotEmpty()
   rue: string;
 
@@ -19,7 +18,6 @@ export class CreateAdresseDto {
   codePostal: number;
 
   @IsString()
-  @Min(3)
   @IsNotEmpty()
   ville: string;
 }

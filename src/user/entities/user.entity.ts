@@ -29,7 +29,10 @@ export class UserEntity {
   })
   photos: PhotosEntity;
 
-  @ManyToOne(() => AdresseEntity, (adresse) => adresse.users)
+  @ManyToOne(() => AdresseEntity, (adresse) => adresse.users, {
+    cascade: true,
+    eager: true,
+  })
   @JoinColumn()
   adresse: AdresseEntity;
 }

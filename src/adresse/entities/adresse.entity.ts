@@ -1,5 +1,6 @@
 import { UserEntity } from './../../user/entities/user.entity';
 import { OneToMany, Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class AdresseEntity {
