@@ -1,5 +1,4 @@
 import {
-  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -19,7 +18,7 @@ export class UserService {
   ) {}
 
   // create new UserEntity
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const passwordHash = await bcrypt.hash(createUserDto.password, 10);
     createUserDto = {
       ...createUserDto,
@@ -27,30 +26,46 @@ export class UserService {
     };
     const newUser = await this.userRepository.save(createUserDto);
     if (!newUser) {
-      throw InternalServerErrorException;
+      throw new InternalServerErrorException();
     }
     newUser.password = undefined;
     return newUser;
   }
 
-  async findAll() {
+  // founf all users
+  async findAll(): Promise<UserEntity[]> {
     const users = await this.userRepository.find();
-    if (!users) {
-      throw ForbiddenException;
+    if (users.length <= 0) {
+      throw new NotFoundException();
     }
     users.map((user) => (user.password = undefined));
     return users;
   }
 
-  findOne(id: number) {
-    return this.userRepository.findOne(id);
+  // found one user
+  async findOne(id: number): Promise<UserEntity> {
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+  //update one user
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<any> {
+    const result = await this.userRepository.update(id, updateUserDto);
+    if (result.affected !== 1) {
+      throw new InternalServerErrorException();
+    }
+    return result;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  //delete one user
+  async remove(id: number) {
+    const result = await this.userRepository.delete(id);
+    if (result.affected !== 1) {
+      throw new NotFoundException();
+    }
+    return result;
   }
 }

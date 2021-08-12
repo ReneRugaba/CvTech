@@ -6,10 +6,12 @@ import {
   ManyToOne,
   JoinColumn,
   Entity,
+  Unique,
 } from 'typeorm';
 import { AdresseEntity } from './../../adresse/entities/adresse.entity';
 
 @Entity('user')
+@Unique(['email'])
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
