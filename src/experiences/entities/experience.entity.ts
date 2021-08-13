@@ -1,3 +1,4 @@
+import { CvEntity } from './../../cv/entities/cv.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -5,23 +6,25 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { CvEntity } from './../../cv/entities/cv.entity';
 
-@Entity()
+@Entity('experience')
 export class ExperiencesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  dateDebut: Date;
-
-  @Column()
-  detaFin: Date;
-
-  @Column()
   entreprise: string;
+
+  @Column()
+  nomPoste: string;
 
   @ManyToOne(() => CvEntity, (cv) => cv.experiences)
   @JoinColumn()
   cv: CvEntity;
+
+  @Column({ type: 'datetime' })
+  dateDebut: string;
+
+  @Column({ type: 'datetime' })
+  dateFin: string;
 }
