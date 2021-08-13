@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 import { CvEntity } from './../../cv/entities/cv.entity';
 
-@Entity()
+@Entity('formations')
 export class FormationsEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -9,8 +9,8 @@ export class FormationsEntity {
   @Column()
   nomDiplome: string;
 
-  @Column()
-  dateObtention: Date;
+  @Column({ type: 'datetime' })
+  dateObtention: string;
 
   @ManyToMany(() => CvEntity, (cv) => cv)
   cv: CvEntity[];
