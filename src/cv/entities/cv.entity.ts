@@ -10,9 +10,11 @@ import {
 import { ExperiencesEntity } from './../../experiences/entities/experience.entity';
 import { CompetencesEntity } from './../../competences/entities/competence.entity';
 import { FormationsEntity } from './../../formations/entities/formation.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class CvEntity {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,29 +27,11 @@ export class CvEntity {
   @OneToMany(() => ExperiencesEntity, (experience) => experience)
   experiences: ExperiencesEntity[];
 
-  @ManyToMany(() => CompetencesEntity, (competence) => competence.cv, {
-    cascade: true,
-  })
-  @JoinTable({
-    name: 'cv_competence',
-    joinColumn: { name: 'cvId', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'competenceId', referencedColumnName: 'id' },
-  })
+  @ManyToMany(() => CompetencesEntity, { cascade: true })
+  @JoinTable()
   competences: CompetencesEntity[];
 
-  @ManyToMany(() => FormationsEntity, (formation) => formation.cv, {
-    cascade: true,
-  })
-  @JoinTable({
-    name: 'cv_formation',
-    joinColumn: {
-      name: 'cvId',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'formationId',
-      referencedColumnName: 'id',
-    },
-  })
+  @ManyToMany(() => FormationsEntity, { cascade: true })
+  @JoinTable()
   formation: FormationsEntity[];
 }

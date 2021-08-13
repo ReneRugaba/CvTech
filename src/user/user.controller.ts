@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
+import { genericResponse } from './../config/genericResponse';
 import {
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
@@ -25,47 +26,51 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @ApiCreatedResponse({ description: 'Record created' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
+  @ApiCreatedResponse({ description: genericResponse.recordCreated.Response })
+  @ApiInternalServerErrorResponse({
+    description: genericResponse.serverKo.response,
+  })
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
 
   @Get()
   @ApiOkResponse({
-    description: 'return all users',
+    description: genericResponse.ok.response,
     type: [UserEntity],
   })
-  @ApiNotFoundResponse({ description: 'No records found' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
+  @ApiNotFoundResponse({ description: genericResponse.notFound.response })
+  @ApiInternalServerErrorResponse({
+    description: genericResponse.serverKo.response,
+  })
   async findAll(): Promise<UserEntity[]> {
     return await this.userService.findAll();
   }
 
   @Get(':id')
   @ApiOkResponse({
-    description: 'return all users',
+    description: genericResponse.ok.response,
     type: UserEntity,
   })
-  @ApiNotFoundResponse({ description: 'No record found' })
+  @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
   @Patch(':id')
   @ApiOkResponse({
-    description: 'Update succefull',
+    description: genericResponse.ok.response,
   })
-  @ApiNotFoundResponse({ description: 'No record found' })
+  @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({
-    description: 'Delete succefull',
+    description: genericResponse.ok.response,
   })
-  @ApiNotFoundResponse({ description: 'No record found' })
+  @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
