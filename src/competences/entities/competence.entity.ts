@@ -8,7 +8,4 @@ export class CompetencesEntity {
 
   @Column()
   nom: string;
-
-  @ManyToMany(() => CvEntity, (cv) => cv.competences)
-  cv: CvEntity[];
 }
