@@ -6,18 +6,38 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFiles,
+  Res,
 } from '@nestjs/common';
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
 
+@ApiTags('PHOTOS')
 @Controller('photos')
 export class PhotosController {
   constructor(private readonly photosService: PhotosService) {}
 
+  @Get(':fileid')
+  async sendFile(
+    @Param('fileid') fileId: string,
+    @Res() res: Response,
+  ): Promise<any> {
+    res.sendFile(fileId, { root: 'photo' });
+  }
+
   @Post()
-  create(@Body() createPhotoDto: CreatePhotoDto) {
-    return this.photosService.create(createPhotoDto);
+  @UseInterceptors(FilesInterceptor('photo'))
+  create(@UploadedFiles() file: Express.Multer.File) {
+    const photoDto = new CreatePhotoDto();
+    photoDto.createAt = new Date();
+    photoDto.fileName = file[0].filename;
+    photoDto.pathFile = 'http://localhost:3000/photos/' + file[0].filename;
+    return this.photosService.create(photoDto);
   }
 
   @Get()

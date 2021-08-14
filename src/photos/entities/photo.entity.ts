@@ -7,18 +7,18 @@ import {
 } from 'typeorm';
 import { UserEntity } from './../../user/entities/user.entity';
 
-@Entity('photos')
+@Entity()
 export class PhotosEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  nameFile: string;
+  fileName: string;
 
   @Column()
   pathFile: string;
 
-  @Column()
+  @Column({ type: 'datetime' })
   createAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.photos)

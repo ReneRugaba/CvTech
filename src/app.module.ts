@@ -9,6 +9,7 @@ import { ExperiencesModule } from './experiences/experiences.module';
 import { FormationsModule } from './formations/formations.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { connectDb } from './config/connectDb';
+import { IndexModule } from './index/index.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { connectDb } from './config/connectDb';
     CvModule,
     ExperiencesModule,
     FormationsModule,
+    IndexModule,
   ],
   controllers: [],
   providers: [],
