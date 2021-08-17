@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { FormationsService } from './formations.service';
 import { CreateFormationDto } from './dto/create-formation.dto';
@@ -19,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { genericResponse } from './../config/genericResponse';
 import { FormationsEntity } from './entities/formation.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('FORMATIONS')
 @Controller('formations')
@@ -26,6 +28,7 @@ export class FormationsController {
   constructor(private readonly formationsService: FormationsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({
     description: genericResponse.recordCreated.Response,
     type: FormationsEntity,
@@ -38,6 +41,7 @@ export class FormationsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: [FormationsEntity],
@@ -51,6 +55,7 @@ export class FormationsController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: FormationsEntity,
@@ -64,6 +69,7 @@ export class FormationsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({
@@ -77,6 +83,7 @@ export class FormationsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({

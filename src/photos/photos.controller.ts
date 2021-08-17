@@ -8,6 +8,7 @@ import {
   UseInterceptors,
   UploadedFiles,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
@@ -23,6 +24,9 @@ import { Response } from 'express';
 import { genericResponse } from './../config/genericResponse';
 import { ApiFile } from './ApiFile';
 import { PhotosEntity } from './entities/photo.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
+
 
 @ApiTags('PHOTOS')
 @Controller('photos')
@@ -38,6 +42,7 @@ export class PhotosController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiInternalServerErrorResponse({
     description: genericResponse.serverKo.response,
@@ -54,6 +59,7 @@ export class PhotosController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: [PhotosEntity],
@@ -67,6 +73,7 @@ export class PhotosController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: PhotosEntity,
@@ -80,6 +87,7 @@ export class PhotosController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiInternalServerErrorResponse({
     description: genericResponse.serverKo.response,
@@ -96,6 +104,7 @@ export class PhotosController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({

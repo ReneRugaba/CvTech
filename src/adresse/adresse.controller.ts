@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AdresseService } from './adresse.service';
 import { CreateAdresseDto } from './dto/create-adresse.dto';
@@ -21,6 +22,7 @@ import {
   ApiOkResponse,
   ApiNotFoundResponse,
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('ADRESSE')
 @Controller('adresse')
@@ -28,6 +30,7 @@ export class AdresseController {
   constructor(private readonly adresseService: AdresseService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ description: genericResponse.recordCreated.Response })
   @ApiConflictResponse({ description: genericResponse.conflicts.response })
   @ApiInternalServerErrorResponse({
@@ -38,6 +41,7 @@ export class AdresseController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: [AdresseEntity],
@@ -51,6 +55,7 @@ export class AdresseController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: AdresseEntity,
@@ -64,6 +69,7 @@ export class AdresseController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
   })
@@ -73,6 +79,7 @@ export class AdresseController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
   })

@@ -19,4 +19,7 @@ export const genericResponse = {
     status: 201,
     Response: 'Record created',
   },
+  jwtConstant: {
+    secret: 'secretKey',
+  },
 };

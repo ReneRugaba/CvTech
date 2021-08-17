@@ -17,6 +17,10 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  async findOneUser(username: string) {
+    return this.userRepository.findOne({ email: username });
+  }
+
   // create new UserEntity
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const passwordHash = await bcrypt.hash(createUserDto.password, 10);

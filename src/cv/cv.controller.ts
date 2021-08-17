@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CvService } from './cv.service';
 import { CreateCvDto } from './dto/create-cv.dto';
@@ -18,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { genericResponse } from './../config/genericResponse';
 import { CvEntity } from './entities/cv.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('CV')
 @Controller('cv')
@@ -25,6 +27,7 @@ export class CvController {
   constructor(private readonly cvService: CvService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiInternalServerErrorResponse({
     description: genericResponse.serverKo.response,
@@ -34,6 +37,7 @@ export class CvController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response, type: [CvEntity] })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({
@@ -44,6 +48,7 @@ export class CvController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response, type: CvEntity })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({
@@ -54,6 +59,7 @@ export class CvController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({
@@ -67,6 +73,7 @@ export class CvController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: genericResponse.ok.response })
   @ApiNotFoundResponse({ description: genericResponse.notFound.response })
   @ApiInternalServerErrorResponse({

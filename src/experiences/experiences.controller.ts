@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ExperiencesService } from './experiences.service';
 import { CreateExperienceDto } from './dto/create-experience.dto';
@@ -18,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { genericResponse } from './../config/genericResponse';
 import { ExperiencesEntity } from './entities/experience.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('EXPERIENCES')
 @Controller('experiences')
@@ -25,6 +27,7 @@ export class ExperiencesController {
   constructor(private readonly experiencesService: ExperiencesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: ExperiencesEntity,
@@ -36,6 +39,7 @@ export class ExperiencesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: [ExperiencesEntity],
@@ -49,6 +53,7 @@ export class ExperiencesController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: ExperiencesEntity,
@@ -62,6 +67,7 @@ export class ExperiencesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateExperienceDto: UpdateExperienceDto,
@@ -70,6 +76,7 @@ export class ExperiencesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string): Promise<any> {
     return this.experiencesService.remove(+id);
   }
