@@ -11,7 +11,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { connectDb } from './config/connectDb';
 import { IndexModule } from './index/index.module';
 import { AuthModule } from './auth/auth.module';
-import { UserService } from './user/user.service';
 
 @Module({
   imports: [

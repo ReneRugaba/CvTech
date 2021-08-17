@@ -26,8 +26,6 @@ import { ApiFile } from './ApiFile';
 import { PhotosEntity } from './entities/photo.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
-
-
 @ApiTags('PHOTOS')
 @Controller('photos')
 export class PhotosController {

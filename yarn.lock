@@ -1628,6 +1628,13 @@
   "resolved" "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz"
   "version" "1.5.1"
 
+"basic-auth@^2.0.1":
+  "integrity" "sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg=="
+  "resolved" "https://registry.npmjs.org/basic-auth/-/basic-auth-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "safe-buffer" "5.1.2"
+
 "bcrypt@^5.0.1":
   "integrity" "sha512-9BTgmrhZM2t1bNuDtrtIMVSmmxZBrJ71n8Wg+YgdjHuIWYF7SjjmCPZFB+/5i/o/PIeRpwVJR3P+NrpIItUjqw=="
   "resolved" "https://registry.npmjs.org/bcrypt/-/bcrypt-5.0.1.tgz"
@@ -2552,6 +2559,13 @@
     "jest-matcher-utils" "^27.0.6"
     "jest-message-util" "^27.0.6"
     "jest-regex-util" "^27.0.6"
+
+"express-basic-auth@^1.2.0":
+  "integrity" "sha512-iJ0h1Gk6fZRrFmO7tP9nIbxwNgCUJASfNj5fb0Hy15lGtbqqsxpt7609+wq+0XlByZjXmC/rslWQtnuSTVRIcg=="
+  "resolved" "https://registry.npmjs.org/express-basic-auth/-/express-basic-auth-1.2.0.tgz"
+  "version" "1.2.0"
+  dependencies:
+    "basic-auth" "^2.0.1"
 
 "express@>=4.0.0", "express@4.17.1":
   "integrity" "sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g=="
