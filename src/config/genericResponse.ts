@@ -22,4 +22,5 @@ export const genericResponse = {
   jwtConstant: {
     secret: 'secretKey',
   },
+  prefixPathApp: 'http://localhost:3000',
 };

@@ -39,7 +39,6 @@ export class AdresseService {
 
   async findAll(): Promise<AdresseEntity[]> {
     const adresses = await this.adresseRepository.find();
-    console.log(adresses);
     if (adresses.length <= 0) {
       throw new NotFoundException();
     }

@@ -8,7 +8,7 @@ import { authApp } from './config/authApp';
 import * as basicAuth from 'express-basic-auth';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: console });
 
   app.use(
     ['/api', '/docs-json'],
@@ -39,7 +39,9 @@ async function bootstrap() {
     }),
   );
   app.enableCors();
-  await app.listen(portApp);
+  await app.listen(portApp, async () =>
+    console.log(`app start on ${await app.getUrl()}`),
+  );
 }
 
 bootstrap();
