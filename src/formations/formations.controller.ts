@@ -12,6 +12,7 @@ import { FormationsService } from './formations.service';
 import { CreateFormationDto } from './dto/create-formation.dto';
 import { UpdateFormationDto } from './dto/update-formation.dto';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
@@ -23,6 +24,7 @@ import { FormationsEntity } from './entities/formation.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('FORMATIONS')
+@ApiBearerAuth()
 @Controller('formations')
 export class FormationsController {
   constructor(private readonly formationsService: FormationsService) {}
