@@ -20,6 +20,7 @@ import {
   ApiOkResponse,
   ApiTags,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 
 @ApiTags('USER')
@@ -38,6 +39,7 @@ export class UserController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: [UserEntity],
@@ -51,6 +53,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
@@ -62,6 +65,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
@@ -72,6 +76,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,

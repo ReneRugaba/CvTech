@@ -8,7 +8,7 @@ import { authApp } from './config/authApp';
 import * as basicAuth from 'express-basic-auth';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: console });
+  const app = await NestFactory.create(AppModule);
 
   app.use(
     ['/api', '/docs-json'],
@@ -21,6 +21,7 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('CV-TECH')
     .setDescription('Createur et organisateur de cv')
     .setVersion('1.0')
