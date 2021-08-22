@@ -47,17 +47,17 @@ export class PhotosService {
     return affected;
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<any> {
     const photo = await this.phoptosRepository.findOne(id);
+    const affected = await this.phoptosRepository.delete(id);
+    if (affected.affected !== 1) {
+      throw new InternalServerErrorException();
+    }
     const path = `photo/${photo.fileName}`;
     this.fs = require('fs');
     try {
       this.fs.unlinkSync(path);
     } catch (error) {
-      throw new InternalServerErrorException();
-    }
-    const affected = await this.phoptosRepository.delete(id);
-    if (affected.affected !== 1) {
       throw new InternalServerErrorException();
     }
     return affected;
