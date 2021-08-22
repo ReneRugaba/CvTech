@@ -11,6 +11,8 @@ import { PhotosEntity } from './entities/photo.entity';
 
 @Injectable()
 export class PhotosService {
+  private fs: any;
+
   constructor(
     @InjectRepository(PhotosEntity)
     private readonly phoptosRepository: Repository<PhotosEntity>,
@@ -46,6 +48,14 @@ export class PhotosService {
   }
 
   async remove(id: number) {
+    const photo = await this.phoptosRepository.findOne(id);
+    const path = `photo/${photo.fileName}`;
+    this.fs = require('fs');
+    try {
+      this.fs.unlinkSync(path);
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
     const affected = await this.phoptosRepository.delete(id);
     if (affected.affected !== 1) {
       throw new InternalServerErrorException();

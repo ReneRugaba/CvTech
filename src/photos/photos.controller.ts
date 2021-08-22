@@ -13,20 +13,22 @@ import {
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import {
+  ApiBearerAuth,
   ApiConsumes,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { genericResponse } from './../config/genericResponse';
 import { ApiFile } from './ApiFile';
 import { PhotosEntity } from './entities/photo.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('PHOTOS')
+@ApiBearerAuth()
 @Controller('photos')
 export class PhotosController {
   constructor(private readonly photosService: PhotosService) {}
@@ -50,9 +52,11 @@ export class PhotosController {
   @UseInterceptors(FilesInterceptor('photo'))
   create(@UploadedFiles() file: Express.Multer.File) {
     const photoDto = new CreatePhotoDto();
+    console.log(file);
     photoDto.createAt = new Date();
     photoDto.fileName = file[0].filename;
-    photoDto.pathFile = 'http://localhost:3000/photos/' + file[0].filename;
+    photoDto.pathFile =
+      'http://localhost:3000/photos/upload/' + file[0].filename;
     return this.photosService.create(photoDto);
   }
 
