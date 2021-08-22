@@ -21,10 +21,12 @@ import {
   ApiConflictResponse,
   ApiOkResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('ADRESSE')
+@ApiBearerAuth()
 @Controller('adresse')
 export class AdresseController {
   constructor(private readonly adresseService: AdresseService) {}
