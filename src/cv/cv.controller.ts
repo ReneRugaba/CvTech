@@ -16,12 +16,14 @@ import {
   ApiOkResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { genericResponse } from './../config/genericResponse';
 import { CvEntity } from './entities/cv.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('CV')
+@ApiBearerAuth()
 @Controller('cv')
 export class CvController {
   constructor(private readonly cvService: CvService) {}

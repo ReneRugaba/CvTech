@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CompetencesService } from './competences.service';
 import { CreateCompetenceDto } from './dto/create-competence.dto';
@@ -16,16 +17,20 @@ import {
   ApiInternalServerErrorResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { genericResponse } from './../config/genericResponse';
 import { CompetencesEntity } from './entities/competence.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('COMPETENCES')
+@ApiBearerAuth()
 @Controller('competences')
 export class CompetencesController {
   constructor(private readonly competencesService: CompetencesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({
     description: genericResponse.ok.response,
     type: CompetencesEntity,
@@ -40,6 +45,7 @@ export class CompetencesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: [CompetencesEntity],
@@ -53,6 +59,7 @@ export class CompetencesController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
     type: CompetencesEntity,
@@ -66,6 +73,7 @@ export class CompetencesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
   })
@@ -81,6 +89,7 @@ export class CompetencesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({
     description: genericResponse.ok.response,
   })
