@@ -57,6 +57,13 @@ export class UserService {
 
   //update one user
   async update(id: number, updateUserDto: UpdateUserDto): Promise<any> {
+    if (updateUserDto.password) {
+      const passwordHash = await bcrypt.hash(updateUserDto.password, 10);
+      updateUserDto = {
+        ...updateUserDto,
+        password: passwordHash,
+      };
+    }
     const result = await this.userRepository.update(id, updateUserDto);
     if (result.affected !== 1) {
       throw new InternalServerErrorException();
