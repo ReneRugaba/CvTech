@@ -2,7 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
@@ -24,14 +23,15 @@ export class CvEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @OneToMany(() => ExperiencesEntity, (experience) => experience)
+  @ManyToMany(() => ExperiencesEntity, { cascade: true, eager: true })
+  @JoinTable()
   experiences: ExperiencesEntity[];
 
-  @ManyToMany(() => CompetencesEntity, { cascade: true })
+  @ManyToMany(() => CompetencesEntity, { cascade: true, eager: true })
   @JoinTable()
   competences: CompetencesEntity[];
 
-  @ManyToMany(() => FormationsEntity, { cascade: true })
+  @ManyToMany(() => FormationsEntity, { cascade: true, eager: true })
   @JoinTable()
   formation: FormationsEntity[];
 }

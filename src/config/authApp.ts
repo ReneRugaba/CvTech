@@ -1,4 +1,4 @@
 export const authApp = {
-  userName: 'mysUser',
-  passWord: 'monPassWord',
+  userName: process.env.USER_APP,
+  passWord: process.env.PASSWORD_APP,
 };

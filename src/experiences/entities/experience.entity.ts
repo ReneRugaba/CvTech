@@ -1,11 +1,4 @@
-import { CvEntity } from './../../cv/entities/cv.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('experience')
 export class ExperiencesEntity {
@@ -17,10 +10,6 @@ export class ExperiencesEntity {
 
   @Column()
   nomPoste: string;
-
-  @ManyToOne(() => CvEntity, (cv) => cv.experiences)
-  @JoinColumn()
-  cv: CvEntity;
 
   @Column({ type: 'datetime' })
   dateDebut: string;

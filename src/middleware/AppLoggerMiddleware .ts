@@ -9,7 +9,7 @@ export class AppLoggerMiddleware implements NestMiddleware {
     const { ip, method, baseUrl } = req;
     const userAgent = req.get('user-agent') || '';
 
-    res.on('close', () => {
+    res.on('close', async () => {
       const { statusCode } = res;
       const contentLength = res.get('content-length');
       const dateNow = new Date();
@@ -21,7 +21,7 @@ export class AppLoggerMiddleware implements NestMiddleware {
         dateNow +
         ' -- [UserAgent]=> ' +
         userAgent +
-        ' -- [Ip]=>' +
+        ' -- [Ip]=> ' +
         ip +
         ' -- [baseUr]=>localhost:3000' +
         baseUrl +
@@ -30,11 +30,16 @@ export class AppLoggerMiddleware implements NestMiddleware {
         ' -- [ContentLength]=>' +
         contentLength;
 
-      this.fs.writeFile('logsApp.txt', logApp + '\n', { flag: 'a' }, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      await this.fs.writeFile(
+        'logsApp.txt',
+        logApp + '\n',
+        { flag: 'a' },
+        (err) => {
+          if (err) {
+            console.log(err);
+          }
+        },
+      );
       this.logger.log(logApp);
     });
     next();

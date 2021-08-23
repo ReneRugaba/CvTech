@@ -47,12 +47,14 @@ export class UserService {
   }
 
   // found one user
-  async findOne(id: number): Promise<UserEntity> {
-    const user = await this.userRepository.findOne(id);
+  async findOne(id: number): Promise<UpdateUserDto> {
+    const user: UserEntity = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundException();
     }
-    return user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...result } = user;
+    return result;
   }
 
   //update one user
@@ -72,7 +74,7 @@ export class UserService {
   }
 
   //delete one user
-  async remove(id: number) {
+  async remove(id: number): Promise<any> {
     const result = await this.userRepository.delete(id);
     if (result.affected !== 1) {
       throw new NotFoundException();

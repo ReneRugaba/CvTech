@@ -12,11 +12,17 @@ import { connectDb } from './config/connectDb';
 import { IndexModule } from './index/index.module';
 import { AuthModule } from './auth/auth.module';
 import { AppLoggerMiddleware } from './middleware/AppLoggerMiddleware ';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(connectDb),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 15,
+    }),
     UserModule,
     PhotosModule,
     AdresseModule,
@@ -28,7 +34,12 @@ import { AppLoggerMiddleware } from './middleware/AppLoggerMiddleware ';
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {
   configure(consummer: MiddlewareConsumer) {
